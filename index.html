@@ -1,0 +1,57 @@
+<!-- Indrawan Saputra (indrawan@csu.fullerton.edu) & Sha Lu(sha.lu@csu.fullerton.edu) -->
+<!-- CPSC 473-01 Assignment 5 -->
+<!-- 3/22/2016 --> 
+
+<!doctype HTML>
+<html>
+<head>
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+</head>
+<body>
+
+	<p> It's a coin toss, please pick: </p>
+	<div>
+		<span><button id="heads">heads</button></span> 
+		<span><button id="tails">tails</button></span> 
+		<span id="printResult"></span>
+	</div>
+
+	<div>
+		<a href="/stats">Click here to check your stats!</a>
+	</div>
+
+	<script type="text/javascript">
+		var $printResult;
+
+		$("#heads").on("click", function (event) {
+			console.log("button clicked.. ");
+			$.post("http://localhost:3000/flip", {"call": "heads"}, function(data){
+				console.log("response from server = " + data['result']);
+				if (data["result"] == "win") {
+					$printResult = "<p>Correct, You Win!</p>";
+				} else {
+					$printResult = "<p>Incorrect, You Lose!</p>";
+				}
+				$("#printResult").empty();
+				$("#printResult").append($printResult);
+			});
+		});
+
+		$("#tails").on("click", function (event) {
+			console.log("tails button clicked.. ");
+			$.post("http://localhost:3000/flip", {"call": "tails"}, function(data){
+				console.log("response from server = " + data);
+				if (data["result"] == "win") {
+					$printResult = "<p>Correct, You Win!</p>";
+				} else {
+					$printResult = "<p>Incorrect,You Lose!</p>";
+				}
+				$("#printResult").empty();
+				$("#printResult").append($printResult);
+			});
+		});
+	</script>
+
+
+</body>
+</html>
